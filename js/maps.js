@@ -10,13 +10,14 @@ let maps = [{
     }
   },
 
-  draw: () => {
+  draw: (player) => {
     // FUNDO "CAVERNA"
     ctx.drawImage(backgroundImg2, 0, 0, canvas.width, canvas.height - tile1.size);
 
     // Obstáculos
     for (let i = 0; i < maps[currentMap].obstacles.length; i++) {
       ctx.drawImage(cTile1, maps[currentMap].obstacles[i].x, maps[currentMap].obstacles[i].y, maps[currentMap].obstacles[i].size, maps[currentMap].obstacles[i].size);
+      player.handleColision(maps[currentMap].obstacles[i]);
     }
 
     // INFOS
@@ -68,6 +69,7 @@ let maps = [{
     // Obstáculos
     for (let i = 0; i < maps[1].obstacles.length; i++) {
       ctx.drawImage(cTile1, maps[1].obstacles[i].x, maps[1].obstacles[i].y, maps[1].obstacles[i].size, maps[1].obstacles[i].size);
+      player.handleColision(maps[currentMap].obstacles[i]);
     }
     
     // for (let i = 0; i < maps[1].fireBalls.length; i++) {

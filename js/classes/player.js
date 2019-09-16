@@ -10,8 +10,8 @@ class Character {
     this.jumping = false;
 
     // Posicionamento
-    this.x = 20; // Posição X inicial
-    this.y = canvas.height - this.size - tile1.size + this.speedY; // (Editar para o tamanho do bloco inicial)
+    this.x = this.ox = 20; // Posição X inicial
+    this.y = this.oy = canvas.height - this.size - tile1.size + this.speedY; // (Editar para o tamanho do bloco inicial)
 
     this.img = new Image();
     this.imgWidth = 4185; // Largura da sprite
@@ -33,6 +33,9 @@ class Character {
   update() {
     this.curFrame += this.updateFrameSpeed; // Isso serve pra 'retardar' o update nos frames do this
     this.srcX = (Math.floor(this.curFrame) % this.cols) * this.frameWidth;
+
+    this.ox = this.x;
+    this.oy = this.y;
 
     this.speedY += 0.1;// Gravidade
     this.x += this.speedX;
@@ -70,11 +73,11 @@ class Character {
       this.speedX += 0.035;
     }
 
-    if (this.y > canvas.height - tile1.size - this.size) { // Resetando o pulo
-      this.jumping = false;
-      this.y = canvas.height - tile1.size - this.size - 0.1;
-      this.speedY = 0;
-    }
+    // if (this.y > canvas.height - tile1.size - this.size) { // Resetando o pulo
+      // this.jumping = false;
+      // this.y = canvas.height - tile1.size - this.size - 0.1;
+      // this.speedY = 0;
+    // }
 
     if (currentMap == 0 && this.x + this.size > canvas.width) {
       currentMap = 1;
@@ -87,10 +90,32 @@ class Character {
     ctx.drawImage(img, this.srcX, this.srcY, this.frameWidth, this.frameHeight, this.x, this.y, this.size, this.size);
   }
 
-  checkColision(player, obstacle) { // return true if colide
-    return (player.x < obstacle.x + obstacle.size)
-    && (player.x + player.size > obstacle.x)
-    && (player.y < obstacle.y + obstacle.size)
-    && (player.y + player.size > obstacle.y)
+  setBottom(b) { this.y = b - this.size; this.y = b - this.size; }
+  setLeft(l)   { this.x = l;             this.x = l; }
+  setRight(r)  { this.x = r - this.size; this.x = r - this.size; }
+  setTop(t)    { this.y = t;             this.y = t; }
+
+  // checkColision(player, obstacle) { // return true if colide
+  //   return (player.x < obstacle.x + obstacle.size)
+  //   && (player.x + player.size > obstacle.x)
+  //   && (player.y < obstacle.y + obstacle.size)
+  //   && (player.y + player.size > obstacle.y)
+  // }
+
+  handleColision(obstacle) {
+    if (this.y + this.size < obstacle.y || this.y > obstacle.y + obstacle.size || this.x > obstacle.x + obstacle.size || this.x + this.size < obstacle.x) return;
+  
+    if (this.y + this.size >= obstacle.y && this.oy < obstacle.y) {
+      this.setBottom(obstacle.y - 0.1);
+      this.jumping = false;
+    } else if (this.y <= obstacle.y + obstacle.size && this.oy > obstacle.y + obstacle.size) {
+      this.setTop(obstacle.y + this.size + 0.1);
+    } else if (this.x + this.size >= obstacle.x && this.ox + this.size < obstacle.x) {
+      this.setRight(obstacle.x - 0.1);
+    } else if (this.x <= obstacle.x + obstacle.size && this.ox > obstacle.x + obstacle.size) {
+      this.setLeft(obstacle.x + obstacle.size + 0.1);
+    }
+
   }
 }
+// }
