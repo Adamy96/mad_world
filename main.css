@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  cursor: none;
+}
+
+#canvas {
+  /* background-color: #0a1738; */
+  /* background-color: #852e4c; */
+  /* background-color: #14253c; */
+  /* background-color: #362f3d; */
+}
+
+.hideGame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background-color: black;
+}
+
+.showGame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background-color: black;
+
+  animation: fadeOut 8s linear forwards;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, .6);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 80px;
+  font-family: 'Chilanka';
+
+  animation: fadeIn 3s 1s linear both;
+}
+
+.h1_fadeOut {
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, .6);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 80px;
+  font-family: 'Chilanka';
+
+  animation: fadeOut 4s linear both;
+}
+
+
+
+body {
+  overflow: hidden;
+}
+
+a {
+  opacity: 0;
+  position: absolute;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
