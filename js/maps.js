@@ -47,16 +47,16 @@ let maps = [{
     maps[1].obstacles.push(new Obstacle(8 * tile1.size, canvas.height - 2 * tile1.size, 0, 0, tile1.size));
     maps[1].obstacles.push(new Obstacle(8 * tile1.size, canvas.height - 3 * tile1.size, 0, 0, tile1.size));
   
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       maps[1].obstacles.push(new Obstacle((i + 11) * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
     }
 
-    for (let i = 0; i < 4; i++) {
-      maps[1].obstacles.push(new Obstacle((i + 18) * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
+    for (let i = 0; i < 2; i++) {
+      maps[1].obstacles.push(new Obstacle((i + 17) * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
     }
 
-    for (let i = 0; i < 2; i++) {
-      maps[1].obstacles.push(new Obstacle((i + 24) * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
+    for (let i = 0; i < 3; i++) {
+      maps[1].obstacles.push(new Obstacle((i + 22) * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
     }
 
   },
@@ -90,8 +90,8 @@ let maps = [{
     maps[1].count += 1;
 
     if (maps[1].count % 400 === 0) {
-      maps[1].fireBalls.push(new fireBall(17 * tile1.size, canvas.height - 2 * tile1.size, 0, -8, 25, 25));
-      maps[1].fireBalls.push(new fireBall(23 * tile1.size, canvas.height - 2 * tile1.size, 0, -8, 25, 25))
+      maps[1].fireBalls.push(new fireBall(15.5 * tile1.size, canvas.height - 2 * tile1.size, 0, -8, 25, 25));
+      maps[1].fireBalls.push(new fireBall(20.5 * tile1.size, canvas.height - 2 * tile1.size, 0, -8, 25, 25))
     }
     
     for (let i = 0; i < maps[1].fireBalls.length; i++) {
@@ -104,8 +104,13 @@ let maps = [{
       }
     }
 
-    if (player.checkColisionX(player, maps[currentMap].obstacles)) {
-      console.log('Colisao');
-    }
+    // for (let i = 0; i < maps[currentMap].obstacles.length; i++) {
+    //   if (player.checkColision(player, maps[currentMap].obstacles[i])) {
+    //     player.y = maps[currentMap].obstacles[i].y;
+    //     player.speedY = 0;
+    //     // console.log('Colisao');
+    //   }
+    // }
+    
   }
 }];

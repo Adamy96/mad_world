@@ -53,31 +53,32 @@ class Character {
     }
 
     if (controller.up && this.jumping == false) { // Pulo
-      this.speedY -= 7;
+      this.speedY -= 10; // 7
       this.jumping = true;
     }
 
     if (controller.left) { // Andar para esquerda
       this.srcY = 1 * this.frameHeight;
       this.updateFrameSpeed = 0.1;
-      this.speedX -= 0.03;
+      this.speedX -= 0.035;
       if (this.x < 0) this.speedX = 0;
     }
 
     if (controller.right) { // Andar para direita
       this.srcY = 0 * this.frameHeight;
       this.updateFrameSpeed = 0.1;
-      this.speedX += 0.03;
+      this.speedX += 0.035;
     }
 
     if (this.y > canvas.height - tile1.size - this.size) { // Resetando o pulo
       this.jumping = false;
-      this.y = canvas.height - tile1.size - this.size;
-      this.y_velocity = 0; // TODO: mudar pra speedY
+      this.y = canvas.height - tile1.size - this.size - 0.1;
+      this.speedY = 0;
     }
 
     if (currentMap == 0 && this.x + this.size > canvas.width) {
       currentMap = 1;
+      this.y -= 0.1;
       this.x = 20;
     } 
   }
@@ -86,19 +87,10 @@ class Character {
     ctx.drawImage(img, this.srcX, this.srcY, this.frameWidth, this.frameHeight, this.x, this.y, this.size, this.size);
   }
 
-  checkColisionX(player, obstacles) {
-    for (let i = 0; i < obstacles.length; i++) {
-      return (player.x + player.speedX < obstacles[i] + obstacles[i].size) // Lado direito
-      && (player.x + player.size + player.speedX > obstacles[i].x) // Lado esquerdo
-    }
-    
-  }
-
-  checkColisionY(player, obstacles) {
-    for (let i = 0; i < obstacles.length; i++) {
-      return (player.y + player.size + player.speedY < obstacles[i].y) // Colisão 'chão'
-      && (player.y + player.speedY > obstacles[i].y  + obstacles[i].size) // Colisão teto
-    }
+  checkColision(player, obstacle) { // return true if colide
+    return (player.x < obstacle.x + obstacle.size)
+    && (player.x + player.size > obstacle.x)
+    && (player.y < obstacle.y + obstacle.size)
+    && (player.y + player.size > obstacle.y)
   }
 }
-
