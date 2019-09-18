@@ -241,11 +241,60 @@ let maps = [{
       player.handleColision(maps[currentMap].obstacles[i]);
     }
 
-    
+
+    ctx.drawImage(cBoss, boss.x, boss.y, boss.sizeX, boss.sizeY);
+
+    if (boss.currentHealth > 0.75 * boss.maxHealth && maps[3].count % 250 === 0) {
+      boss.pattern100();
+    } else if (boss.currentHealth > 0.5 * boss.maxHealth && maps[3].count % 250 === 0) {
+      boss.pattern75();
+    }
+
+    for (let i = 0; i < boss.schytes1.length; i++) {
+      ctx.drawImage(cSchyte, boss.schytes1[i].srcX, boss.schytes1[i].srcY, boss.schytes1[i].frameWidth, boss.schytes1[i].frameHeight, boss.schytes1[i].x, boss.schytes1[i].y, boss.schytes1[i].width, boss.schytes1[i].height);
+
+      if (player.checkColisionRectangle(boss.schytes1[i])) {
+        player.health -= boss.schytes1[i].damage;
+        boss.schytes1.splice(i, 1);
+      }
+
+      boss.schytes1[i].move();
+    }
+
+    for (let i = 0; i < boss.schytes2.length; i++) {
+      ctx.drawImage(cSchyte, boss.schytes2[i].srcX, boss.schytes2[i].srcY, boss.schytes2[i].frameWidth, boss.schytes2[i].frameHeight, boss.schytes2[i].x, boss.schytes2[i].y, boss.schytes2[i].width, boss.schytes2[i].height);
+      
+      if (player.checkColisionRectangle(boss.schytes2[i])) {
+        console.log(player.health);
+        player.health -= boss.schytes2[i].damage;
+        boss.schytes2.splice(i, 1);
+      }
+
+      boss.schytes2[i].move();
+    }
 
     // Frase
     ctx.font = "50px Chilanka";
     ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
     ctx.fillText("Unless you DEFEAT them!", 7 * tile1.size, 3 * tile1.size);
+
+    ctx.font = "25px Chilanka";
+    ctx.fillText(`${boss.currentHealth.toFixed(0)} / 2000`, boss.x + 55, boss.y - 50);
+    ctx.fillStyle = 'rgb(60, 60, 60)';
+    ctx.fillRect(boss.x + 25, boss.y - 40, 200, 20);
+    ctx.fillStyle = 'rgb(255, 0, 0)';
+    ctx.fillRect(boss.x + 25, boss.y - 40, boss.currentHealth / 10, 20);
+
+    ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
+    ctx.font = "25px Chilanka";
+    ctx.fillText(`${player.health.toFixed(1)} / 100`, player.x + 10, player.y - 30);
+    ctx.fillStyle = 'rgb(60, 60, 60)';
+    ctx.fillRect(player.x + 10, player.y - 20, 100, 10);
+    ctx.fillStyle = 'rgb(255, 0, 0)';
+    ctx.fillRect(player.x + 10, player.y - 20, player.health, 10);
+
+    
+
+    maps[3].count += 1;
   }
 }];

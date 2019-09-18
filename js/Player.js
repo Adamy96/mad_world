@@ -101,10 +101,10 @@ class Character {
     ctx.drawImage(img, this.srcX, this.srcY, this.frameWidth, this.frameHeight, this.x, this.y, this.size, this.size);
   }
 
-  setBottom(b) { this.y = b - this.size; console.log('setBottom');}
-  setLeft(l)   { this.x = l; console.log('setLeft')}
-  setRight(r)  { this.x = r - this.size; console.log('setRight')}
-  setTop(t)    { this.y = t; console.log('setTop')}
+  setBottom(b) { this.y = b - this.size;}
+  setLeft(l)   { this.x = l;}
+  setRight(r)  { this.x = r - this.size;}
+  setTop(t)    { this.y = t;}
 
   handleColision(obstacle) {
     if (this.y + this.size < obstacle.y || this.y > obstacle.y + obstacle.size || this.x > obstacle.x + obstacle.size || this.x + this.size < obstacle.x) return;

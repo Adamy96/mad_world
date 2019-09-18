@@ -8,10 +8,6 @@ window.onload = () => {
   let cplayer = new Image();
   cplayer.src = './img/mainChar_Sprite(Move&Idle)2.svg';
 
-  const boss = new Boss(canvas.width - 3 * tile1.size, canvas.height - 6 * tile1.size, 2000, 200, 290);
-  let cBoss = new Image();
-  cBoss.src = './img/boss.js';
-
   // ================================ FUNÇÕES DE DESENHO ================================
 
 

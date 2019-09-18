@@ -10,7 +10,7 @@ let cBoss = new Image();
 cBoss.src = '../../Programação/game/img/boss.svg';
 
 let cSchyte = new Image();
-cSchyte = '../../boss_schyte.svg';
+cSchyte.src = '../../Programação/game/img/schyte_sprite.svg';
 
 let cLava = new Image();
 cLava.src = '../../Programação/game/img/lava.svg';
