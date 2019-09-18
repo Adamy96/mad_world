@@ -61,6 +61,6 @@ let mouse = {
   }
 }
 
-let currentMap = 3;
+let currentMap = 0;
 
 let gameOver = false;

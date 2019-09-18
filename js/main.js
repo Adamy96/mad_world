@@ -1,4 +1,4 @@
-window.onload = () => {
+// window.onload = () => {
   
 
   // ================================= CRIANDO OS PERSONAGENS ===========================
@@ -105,10 +105,8 @@ window.onload = () => {
   
   document.querySelector('#canvas').addEventListener('click', () => {
     player.shoots.push(new Bullet (mouse.x, mouse.y, 10, 10));
-  
-    console.log(player.shoots);
   });
   
   window.addEventListener('keydown', controller.keyListener);
   window.addEventListener('keyup', controller.keyListener);
-};
+// };

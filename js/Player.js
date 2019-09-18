@@ -25,9 +25,6 @@ class Character {
     this.srcY = 2 * this.frameHeight; // Posição Y da sprite que irá começar o "corte" de um bloco
     this.lastSrcY = 2 * this.frameHeight;
     this.updateFrameSpeed = 0.07;
-
-    // Projéteis criados pelo jogador
-    this.shoots = [];
   }
 
   update() {
@@ -43,16 +40,9 @@ class Character {
     this.speedX *= 0.98; // Fricção
     this.speedY *= 0.98; // Fricção
 
-    for (let i = 0; i < this.shoots.length; i++) { // Atualizando os 'ataques' lançados
-      ctx.beginPath();
-      ctx.fillStyle = 'rgba(255, 0, 0, .8)';
-      ctx.arc(this.shoots[i].x, this.shoots[i].y, this.shoots[i].size, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Deletando os 'ataques'
-      if (this.shoots[i].x < 0 || this.shoots[i].x > canvas.width || this.shoots[i].y < 0 || this.shoots[i].y > canvas.height - tile1.size) {
-        this.shoots.splice(i, 1);
-      }
+    if (this.x < 0) {
+      this.x = 0.1;
+      this.speedX *= -1;
     }
 
     if (controller.up && this.jumping == false) { // Pulo
@@ -90,6 +80,7 @@ class Character {
       this.x = 0.1;
     } 
 
+    // Passando do mapa 2 para o mapa 3 (Boss)
     if (currentMap == 2 && this.x + this.size > canvas.width) {
       currentMap = 3;
       this.y = canvas.height - tile1.size;

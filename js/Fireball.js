@@ -5,7 +5,7 @@ class FireBall {
     this.speedX = speedX;
     this.speedY = speedY;
     this.size = size;
-    this.damage = 0;
+    this.damage = 50;
     this.gravity = gravity;
   }
 

@@ -62,10 +62,10 @@ addEventListener('mousemove', (e) => {
   mouse.y = e.clientY;
 })
 
-document.querySelector('#canvas').addEventListener('click', () => {
-  player.shoots.push(new Bullet (mouse.x, mouse.y, 10, 10));
-
-  console.log(player.shoots);
+document.querySelector('body').addEventListener('click', () => {
+  if (maps[currentMap].bullets.length < 10) {
+    maps[currentMap].bullets.push(new Bullet(player.x + player.size / 2, player.y + player.size / 2, mouse.x, mouse.y, 10));
+  }
 });
 
 window.addEventListener('keydown', controller.keyListener);
