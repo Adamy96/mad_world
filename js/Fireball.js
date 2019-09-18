@@ -1,15 +1,16 @@
-class fireBall {
-  constructor(x, y, speedX, speedY, size, damage) {
+class FireBall {
+  constructor(x, y, speedX, speedY, size, gravity = 0) {
     this.x = x;
     this.y = y;
     this.speedX = speedX;
     this.speedY = speedY;
     this.size = size;
-    this.damage = damage;
+    this.damage = 0;
+    this.gravity = gravity;
   }
 
   move() {
-    this.speedY += 0.1;
+    this.speedY += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY;
   }

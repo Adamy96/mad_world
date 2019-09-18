@@ -42,6 +42,25 @@ h1 {
   animation: fadeIn 3s 1s linear both;
 }
 
+h2 {
+  position: absolute;
+  opacity: 0;
+}
+
+.h2_fadeIn {
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, .6);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 80px;
+  font-family: 'Chilanka';
+  opacity: 0;
+
+  animation: fadeIn 6s 1s linear forwards;
+}
+
 .h1_fadeOut {
   width: 100%;
   text-align: center;

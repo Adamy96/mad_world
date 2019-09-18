@@ -8,11 +8,24 @@ window.onload = () => {
   let cplayer = new Image();
   cplayer.src = './img/mainChar_Sprite(Move&Idle)2.svg';
 
+  const boss = new Boss(canvas.width - 3 * tile1.size, canvas.height - 6 * tile1.size, 2000, 200, 290);
+  let cBoss = new Image();
+  cBoss.src = './img/boss.js';
+
   // ================================ FUNÇÕES DE DESENHO ================================
 
 
-  setInterval(() => {
-  // backgroundMusic.play();
+  let interval = setInterval(() => {
+
+  if (player.y > canvas.height || player.health <= 0) gameOver = true;
+
+  if (gameOver === true) {
+    clearInterval(interval);
+    hideGame.classList.add('hideGame');
+    hideGame.classList.remove('showGame');
+    h2.classList.add('h2_fadeIn');
+  }
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Background geral

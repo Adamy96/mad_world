@@ -6,6 +6,12 @@ let tile1 = {
 let cTile1 = new Image();
 cTile1.src = tile1.src;
 
+let cBoss = new Image();
+cBoss.src = '../../Programação/game/img/boss.svg';
+
+let cSchyte = new Image();
+cSchyte = '../../boss_schyte.svg';
+
 let cLava = new Image();
 cLava.src = '../../Programação/game/img/lava.svg';
 

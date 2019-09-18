@@ -24,9 +24,16 @@ controller = {
 
       case 13: // tecla ENTER
         backgroundMusic.play();
-        hideGame.classList.remove('hideGame');
-        hideGame.classList.add('showGame');
-        h1.classList.add('h1_fadeOut');
+        if (!gameOver) {
+          hideGame.classList.remove('hideGame');
+          hideGame.classList.add('showGame');
+          h1.classList.add('h1_fadeOut');
+        }
+
+        if (gameOver) {
+          ctx.restore();
+          gameOver = false;
+        }
     }
   }
 }

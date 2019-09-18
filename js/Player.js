@@ -4,7 +4,7 @@ class Character {
     // Status
     this.name = name;
     this.health = 100;
-    this.size = 110;
+    this.size = 100;
     this.speedX = 0;
     this.speedY = 0;
     this.jumping = false;
@@ -56,7 +56,7 @@ class Character {
     }
 
     if (controller.up && this.jumping == false) { // Pulo
-      this.speedY -= 10; // 7
+      this.speedY = -8; // -= 7
       this.jumping = true;
     }
 
@@ -71,51 +71,69 @@ class Character {
       this.srcY = 0 * this.frameHeight;
       this.updateFrameSpeed = 0.1;
       this.speedX += 0.035;
+      if (currentMap === 3 && this.x + this.size > canvas.width - 5) this.speedX = 0;
     }
 
-    // if (this.y > canvas.height - tile1.size - this.size) { // Resetando o pulo
-      // this.jumping = false;
-      // this.y = canvas.height - tile1.size - this.size - 0.1;
-      // this.speedY = 0;
-    // }
-
+    // Passando do mapa 0 para o mapa 1
     if (currentMap == 0 && this.x + this.size > canvas.width) {
+      // ctx.save(); Atualizar pra salvar a vida do personagem dps
       currentMap = 1;
       this.y -= 0.1;
-      this.x = 20;
+      this.x = 10;
+    }
+
+    // Passando do mapa 1 para o mapa 2
+    if (currentMap == 1 && this.x + this.size > canvas.width) {
+      // ctx.save(); Atualizar pra salvar a vida do personagem dps
+      currentMap = 2;
+      this.y -= 0.1;
+      this.x = 0.1;
     } 
+
+    if (currentMap == 2 && this.x + this.size > canvas.width) {
+      currentMap = 3;
+      this.y = canvas.height - tile1.size;
+      this.x = 10;
+    }
   }
 
   draw(img) {
     ctx.drawImage(img, this.srcX, this.srcY, this.frameWidth, this.frameHeight, this.x, this.y, this.size, this.size);
   }
 
-  setBottom(b) { this.y = b - this.size; this.y = b - this.size; }
-  setLeft(l)   { this.x = l;             this.x = l; }
-  setRight(r)  { this.x = r - this.size; this.x = r - this.size; }
-  setTop(t)    { this.y = t;             this.y = t; }
-
-  // checkColision(player, obstacle) { // return true if colide
-  //   return (player.x < obstacle.x + obstacle.size)
-  //   && (player.x + player.size > obstacle.x)
-  //   && (player.y < obstacle.y + obstacle.size)
-  //   && (player.y + player.size > obstacle.y)
-  // }
+  setBottom(b) { this.y = b - this.size; console.log('setBottom');}
+  setLeft(l)   { this.x = l; console.log('setLeft')}
+  setRight(r)  { this.x = r - this.size; console.log('setRight')}
+  setTop(t)    { this.y = t; console.log('setTop')}
 
   handleColision(obstacle) {
     if (this.y + this.size < obstacle.y || this.y > obstacle.y + obstacle.size || this.x > obstacle.x + obstacle.size || this.x + this.size < obstacle.x) return;
   
-    if (this.y + this.size >= obstacle.y && this.oy < obstacle.y) {
+    if (this.x + this.size >= obstacle.x && this.ox + this.size < obstacle.x) {
+      this.setRight(obstacle.x - 0.1);
+    } else if (this.x <= obstacle.x + obstacle.size && this.y + this.size <= obstacle.y) {
+      this.setLeft(obstacle.x + obstacle.size + 0.1); // nunca entra nele
+    } else if (this.y + this.size >= obstacle.y && this.oy < obstacle.y) {
       this.setBottom(obstacle.y - 0.1);
       this.jumping = false;
     } else if (this.y <= obstacle.y + obstacle.size && this.oy > obstacle.y + obstacle.size) {
       this.setTop(obstacle.y + this.size + 0.1);
-    } else if (this.x + this.size >= obstacle.x && this.ox + this.size < obstacle.x) {
-      this.setRight(obstacle.x - 0.1);
-    } else if (this.x <= obstacle.x + obstacle.size && this.ox > obstacle.x + obstacle.size) {
-      this.setLeft(obstacle.x + obstacle.size + 0.1);
+      this.speedY = 0;
     }
+  }
 
+  checkColisionRectangle(rectangle) { // return true if colide
+    return (this.x < rectangle.x + rectangle.width)
+    && (this.x + this.size > rectangle.x)
+    && (this.y < rectangle.y + rectangle.height)
+    && (this.y + this.size > rectangle.y)
+  }
+
+  checkColisionSphere(sphere) {
+    return (this.x < sphere.x + sphere.size / 2)
+    && (this.x + this.size > sphere.x - sphere.size / 2)
+    && (this.y < sphere.y + sphere.size / 2)
+    && (this.y + this.size > sphere.y - sphere.size / 2)
   }
 }
 // }
