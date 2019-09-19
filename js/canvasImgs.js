@@ -15,6 +15,9 @@ cSchyte.src = '../../Programação/game/img/schyte_sprite.svg';
 let cChaser = new Image();
 cChaser.src = '../../Programação/game/img/chaser.svg';
 
+let cTunnel = new Image();
+cTunnel.src = '../../Programação/game/img/mario_tunnel.svg';
+
 let cLava = new Image();
 cLava.src = '../../Programação/game/img/lava.svg';
 

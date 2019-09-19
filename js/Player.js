@@ -46,6 +46,7 @@ class Character {
     }
 
     if (controller.up && this.jumping == false) { // Pulo
+      playerJump.play();
       this.speedY = -8; // -= 7
       this.jumping = true;
     }

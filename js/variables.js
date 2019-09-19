@@ -4,6 +4,9 @@ let ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let gameStarted = false;
+let gameOver = false;
+
 let hideGame = document.querySelector('.hideGame');
 let h1 = document.querySelector('h1');
 let h2 = document.querySelector('h2');
@@ -15,6 +18,21 @@ let backgroundMusic = new Audio();
 backgroundMusic.src = './sounds/Alone.mp3';
 backgroundMusic.loop = 'true';
 backgroundMusic.autoplay = 'true';
+
+let playerDie = new Audio();
+playerDie.src = './sounds/player_die.mp3';
+
+let playerJump = new Audio();
+playerJump.src = './sounds/jump.wav';
+
+let lavaContact = new Audio();
+lavaContact.src = './sounds/lava_splash.wav';
+
+let chaserAppear = new Audio();
+chaserAppear.src = './sounds/chaser_appear.wav';
+
+let chaserDie = new Audio();
+chaserDie.src = './sounds/chaser_die.wav';
 
 let explosionSound = new Audio();
 explosionSound.src = './sounds/explosion.mp3';
@@ -62,5 +80,3 @@ let mouse = {
 }
 
 let currentMap = 0;
-
-let gameOver = false;

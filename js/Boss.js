@@ -88,5 +88,3 @@ class Boss {
     }
   }
 }
-
-const boss = new Boss(960, 180, 300, 435);

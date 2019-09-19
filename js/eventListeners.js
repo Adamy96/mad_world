@@ -24,7 +24,9 @@ controller = {
 
       case 13: // tecla ENTER
         backgroundMusic.play();
+        gameStarted = true; // TODO: não ta funcionando
         if (!gameOver) {
+          gameStarted = true;
           hideGame.classList.remove('hideGame');
           hideGame.classList.add('showGame');
           h1.classList.add('h1_fadeOut');

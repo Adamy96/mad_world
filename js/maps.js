@@ -29,12 +29,14 @@ let maps = [{
       player.handleColision(maps[currentMap].obstacles[i]);
     }
 
-    if (maps[currentMap].count % 1000 === 0) {
+    if (maps[currentMap].count % 2000 === 0) {
       let rndNum = Math.floor(Math.random() * 100);
 
       if (rndNum < 50) {
+        chaserAppear.play();
         maps[currentMap].chasers.push(new Chaser(100 + rndNum, -1.5 * tile1.size));
       } else {
+        chaserAppear.play();
         maps[currentMap].chasers.push(new Chaser(canvas.width - rndNum, -1.5 * tile1.size));
       }
     }
@@ -85,7 +87,10 @@ let maps = [{
           maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
           maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
           maps[currentMap].bullets.splice(i, 1);
-          if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
+          if (maps[currentMap].chasers[j].currentHealth <= 0) {
+            chaserDie.play();
+            maps[currentMap].chasers.splice(j, 1);
+          }
         }
       }
       
@@ -159,8 +164,10 @@ let maps = [{
       let rndNum = Math.floor(Math.random() * 100);
 
       if (rndNum < 50) {
+        chaserAppear.play();
         maps[currentMap].chasers.push(new Chaser(100 + rndNum, -1.5 * tile1.size));
       } else {
+        chaserAppear.play();
         maps[currentMap].chasers.push(new Chaser(canvas.width - rndNum, -1.5 * tile1.size));
       }
     }
@@ -211,7 +218,10 @@ let maps = [{
           maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
           maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
           maps[currentMap].bullets.splice(i, 1);
-          if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
+          if (maps[currentMap].chasers[j].currentHealth <= 0) {
+            chaserDie.play();
+            maps[currentMap].chasers.splice(j, 1);
+          }
         }
       }
       
@@ -223,6 +233,7 @@ let maps = [{
       ctx.beginPath();
       ctx.drawImage(cLava, maps[currentMap].lava[i].x, maps[currentMap].lava[i].y, maps[currentMap].lava[i].width, maps[currentMap].lava[i].height)
       if (player.checkColisionRectangle(maps[currentMap].lava[i])) {
+        lavaContact.play();
         player.health -= maps[currentMap].lava[i].damage;
       }
     }
@@ -358,16 +369,16 @@ let maps = [{
       // Deletando a bala caso saia do mapa
       if (maps[currentMap].bullets[i].x < 0 || maps[currentMap].bullets[i].x > canvas.width || maps[currentMap].bullets[i].y < 0 || maps[currentMap].bullets[i].y > canvas.height) maps[currentMap].bullets.splice(i, 1);
     
-      // Balas colidindo com os Chasers
-      for (let j = 0; j < maps[currentMap].chasers.length; j++) {
-        if (maps[currentMap].bullets[i].checkColisionRectangle(maps[currentMap].chasers[j])) {
-          maps[currentMap].chasers[j].currentHealth -= maps[currentMap].bullets[i].damage;
-          maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
-          maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
-          maps[currentMap].bullets.splice(i, 1);
-          if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
-        }
-      }
+      // // Balas colidindo com os Chasers
+      // for (let j = 0; j < maps[currentMap].chasers.length; j++) {
+      //   if (maps[currentMap].bullets[i].checkColisionRectangle(maps[currentMap].chasers[j])) {
+      //     maps[currentMap].chasers[j].currentHealth -= maps[currentMap].bullets[i].damage;
+      //     maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
+      //     maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
+      //     maps[currentMap].bullets.splice(i, 1);
+      //     if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
+      //   }
+      // }
       
     }
     
@@ -391,8 +402,12 @@ let maps = [{
   count: 0,
   chasers: [],
   bullets: [],
+  boss: [],
 
   createObstacles: () => {
+    const boss = new Boss(960, 180, 300, 435);
+    maps[3].boss.push(boss);
+
     for (let i = 0; i < 25; i++) { // Chão
       maps[3].obstacles.push(new Obstacle(i * tile1.size, canvas.height - tile1.size, 0, 0, tile1.size));
     }
@@ -415,84 +430,88 @@ let maps = [{
     }
 
 
-    // Desenhando o boss
-    ctx.drawImage(cBoss, boss.x, boss.y, boss.width, boss.height);
+    if (maps[currentMap].boss[0].currentHealth > 0) {
+      // Desenhando o boss
+      ctx.drawImage(cBoss, maps[currentMap].boss[0].x, maps[currentMap].boss[0].y, maps[currentMap].boss[0].width, maps[currentMap].boss[0].height);
 
-    // "Acionando" os outros estágios do boss
-    if (boss.currentHealth > 0.75 * boss.maxHealth && maps[3].count % 250 === 0) {
-      boss.pattern100();
-    } else if (boss.currentHealth > 0.5 * boss.maxHealth && maps[3].count % 250 === 0) {
-      boss.pattern75();
-    } else if (boss.currentHealth > 0.25 * boss.maxHealth && maps[3].count % 250 === 0) {
-      boss.pattern50();
-    } else if (boss.currentHealth > 0 && maps[3].count % 125 === 0){
-      boss.pattern25();
-    }
-
-    // Inserindo chasers
-    if (maps[currentMap].count % 1000 === 0 && boss.currentHealth < 0.5 * boss.maxHealth) {
-      let rndNum = Math.floor(Math.random() * 100);
-
-      if (rndNum < 50) {
-        maps[currentMap].chasers.push(new Chaser(100 + rndNum, -1.5 * tile1.size));
-      } else {
-        maps[currentMap].chasers.push(new Chaser(canvas.width - rndNum, -1.5 * tile1.size));
-      }
-    }
-
-    // Iterando sobre os Chasers
-    for (let i = 0; i < maps[currentMap].chasers.length; i++) {
-      // Chasers Health
-      ctx.font = "25px Chilanka";
-      ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
-      // ctx.fillText('Chaser', maps[currentMap].chasers[i].x + 35, maps[currentMap].chasers[i].y - 65);
-      ctx.fillText(`${maps[currentMap].chasers[i].currentHealth.toFixed(0)} / ${maps[currentMap].chasers[i].currentHealth}`, maps[currentMap].chasers[i].x + 20, maps[currentMap].chasers[i].y - 35);
-      ctx.fillStyle = 'rgb(60, 60, 60)';
-      ctx.fillRect(maps[currentMap].chasers[i].x + 25, maps[currentMap].chasers[i].y - 25, 100, 10);
-      ctx.fillStyle = 'rgb(255, 0, 0)';
-      ctx.fillRect(maps[currentMap].chasers[i].x + 25, maps[currentMap].chasers[i].y - 25, maps[currentMap].chasers[i].currentHealth / 2, 10);
-
-      ctx.drawImage(cChaser, maps[currentMap].chasers[i].x, maps[currentMap].chasers[i].y, maps[currentMap].chasers[i].width, maps[currentMap].chasers[i].height)
-      
-      if (player.checkColisionRectangle(maps[currentMap].chasers[i])) {
-        player.health -= maps[currentMap].chasers[i].damage;
-
-        // Knockback no player
-        player.speedX = 8 * maps[currentMap].chasers[i].speedX;
-        player.speedY = 3 * maps[currentMap].chasers[i].speedY;
-
-        // Knockback no chaser
-        maps[currentMap].chasers[i].x = maps[currentMap].chasers[i].x - 12 * player.speedX;
-        maps[currentMap].chasers[i].y = maps[currentMap].chasers[i].y - 12 * player.speedY;
-
+      // "Acionando" os outros estágios do boss
+      if (maps[currentMap].boss[0].currentHealth > 0.75 * maps[currentMap].boss[0].maxHealth && maps[3].count % 250 === 0) {
+        maps[currentMap].boss[0].pattern100();
+      } else if (maps[currentMap].boss[0].currentHealth > 0.5 * maps[currentMap].boss[0].maxHealth && maps[3].count % 250 === 0) {
+        maps[currentMap].boss[0].pattern75();
+      } else if (maps[currentMap].boss[0].currentHealth > 0.25 * maps[currentMap].boss[0].maxHealth && maps[3].count % 250 === 0) {
+        maps[currentMap].boss[0].pattern50();
+      } else if (maps[currentMap].boss[0].currentHealth > 0 && maps[3].count % 125 === 0){
+        maps[currentMap].boss[0].pattern25();
       }
 
-      maps[currentMap].chasers[i].move(player);
-    }
+      // Inserindo chasers
+      if (maps[currentMap].count % 1000 === 0 && maps[currentMap].boss[0].currentHealth < 0.5 * maps[currentMap].boss[0].maxHealth) {
+        let rndNum = Math.floor(Math.random() * 100);
 
-    // Desenho das schytes + Player colidindo com as schytes1
-    for (let i = 0; i < boss.schytes1.length; i++) {
-      ctx.drawImage(cSchyte, boss.schytes1[i].srcX, boss.schytes1[i].srcY, boss.schytes1[i].frameWidth, boss.schytes1[i].frameHeight, boss.schytes1[i].x, boss.schytes1[i].y, boss.schytes1[i].width, boss.schytes1[i].height);
-
-      if (player.checkColisionRectangle(boss.schytes1[i])) {
-        player.health -= boss.schytes1[i].damage;
-        boss.schytes1.splice(i, 1);
+        if (rndNum < 50) {
+          chaserAppear.play();
+          maps[currentMap].chasers.push(new Chaser(100 + rndNum, -1.5 * tile1.size));
+        } else {
+          chaserAppear.play();
+          maps[currentMap].chasers.push(new Chaser(canvas.width - rndNum, -1.5 * tile1.size));
+        }
       }
 
-      boss.schytes1[i].move();
-    }
+      // Iterando sobre os Chasers
+      for (let i = 0; i < maps[currentMap].chasers.length; i++) {
+        // Chasers Health
+        ctx.font = "25px Chilanka";
+        ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
+        // ctx.fillText('Chaser', maps[currentMap].chasers[i].x + 35, maps[currentMap].chasers[i].y - 65);
+        ctx.fillText(`${maps[currentMap].chasers[i].currentHealth.toFixed(0)} / ${maps[currentMap].chasers[i].currentHealth}`, maps[currentMap].chasers[i].x + 20, maps[currentMap].chasers[i].y - 35);
+        ctx.fillStyle = 'rgb(60, 60, 60)';
+        ctx.fillRect(maps[currentMap].chasers[i].x + 25, maps[currentMap].chasers[i].y - 25, 100, 10);
+        ctx.fillStyle = 'rgb(255, 0, 0)';
+        ctx.fillRect(maps[currentMap].chasers[i].x + 25, maps[currentMap].chasers[i].y - 25, maps[currentMap].chasers[i].currentHealth / 2, 10);
 
-  // Desenho das schytes + Player colidindo com as schytes2
-    for (let i = 0; i < boss.schytes2.length; i++) {
-      ctx.drawImage(cSchyte, boss.schytes2[i].srcX, boss.schytes2[i].srcY, boss.schytes2[i].frameWidth, boss.schytes2[i].frameHeight, boss.schytes2[i].x, boss.schytes2[i].y, boss.schytes2[i].width, boss.schytes2[i].height);
-      
-      if (player.checkColisionRectangle(boss.schytes2[i])) {
-        console.log(player.health);
-        player.health -= boss.schytes2[i].damage;
-        boss.schytes2.splice(i, 1);
+        ctx.drawImage(cChaser, maps[currentMap].chasers[i].x, maps[currentMap].chasers[i].y, maps[currentMap].chasers[i].width, maps[currentMap].chasers[i].height)
+        
+        if (player.checkColisionRectangle(maps[currentMap].chasers[i])) {
+          player.health -= maps[currentMap].chasers[i].damage;
+
+          // Knockback no player
+          player.speedX = 8 * maps[currentMap].chasers[i].speedX;
+          player.speedY = 3 * maps[currentMap].chasers[i].speedY;
+
+          // Knockback no chaser
+          maps[currentMap].chasers[i].x = maps[currentMap].chasers[i].x - 12 * player.speedX;
+          maps[currentMap].chasers[i].y = maps[currentMap].chasers[i].y - 12 * player.speedY;
+
+        }
+
+        maps[currentMap].chasers[i].move(player);
       }
 
-      boss.schytes2[i].move();
+      // Desenho das schytes + Player colidindo com as schytes1
+      for (let i = 0; i < maps[currentMap].boss[0].schytes1.length; i++) {
+        ctx.drawImage(cSchyte, maps[currentMap].boss[0].schytes1[i].srcX, maps[currentMap].boss[0].schytes1[i].srcY, maps[currentMap].boss[0].schytes1[i].frameWidth, maps[currentMap].boss[0].schytes1[i].frameHeight, maps[currentMap].boss[0].schytes1[i].x, maps[currentMap].boss[0].schytes1[i].y, maps[currentMap].boss[0].schytes1[i].width, maps[currentMap].boss[0].schytes1[i].height);
+
+        if (player.checkColisionRectangle(maps[currentMap].boss[0].schytes1[i])) {
+          player.health -= maps[currentMap].boss[0].schytes1[i].damage;
+          maps[currentMap].boss[0].schytes1.splice(i, 1);
+        }
+
+        maps[currentMap].boss[0].schytes1[i].move();
+      }
+
+    // Desenho das schytes + Player colidindo com as schytes2
+      for (let i = 0; i < maps[currentMap].boss[0].schytes2.length; i++) {
+        ctx.drawImage(cSchyte, maps[currentMap].boss[0].schytes2[i].srcX, maps[currentMap].boss[0].schytes2[i].srcY, maps[currentMap].boss[0].schytes2[i].frameWidth, maps[currentMap].boss[0].schytes2[i].frameHeight, maps[currentMap].boss[0].schytes2[i].x, maps[currentMap].boss[0].schytes2[i].y, maps[currentMap].boss[0].schytes2[i].width, maps[currentMap].boss[0].schytes2[i].height);
+        
+        if (player.checkColisionRectangle(maps[currentMap].boss[0].schytes2[i])) {
+          console.log(player.health);
+          player.health -= maps[currentMap].boss[0].schytes2[i].damage;
+          maps[currentMap].boss[0].schytes2.splice(i, 1);
+        }
+
+        maps[currentMap].boss[0].schytes2[i].move();
+      }
     }
 
     // Desenhando as bullets
@@ -513,17 +532,18 @@ let maps = [{
           maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
           maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
           maps[currentMap].bullets.splice(i, 1);
-          if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
+          if (maps[currentMap].chasers[j].currentHealth <= 0) {
+            chaserDie.play();
+            maps[currentMap].chasers.splice(j, 1);
+          }
         }
       }
       
       // Balas colidindo com o Boss
-        if (maps[currentMap].bullets[i].checkColisionRectangle(boss)) {
-          boss.currentHealth -= maps[currentMap].bullets[i].damage;
-          maps[currentMap].bullets.splice(i, 1);
-        }
-
-    
+      if (maps[currentMap].boss[0].currentHealth > 0 && maps[currentMap].bullets[i].checkColisionRectangle(maps[currentMap].boss[0])) {
+        maps[currentMap].boss[0].currentHealth -= maps[currentMap].bullets[i].damage;
+        maps[currentMap].bullets.splice(i, 1);
+      }
   }
 
     // Frase
@@ -531,13 +551,20 @@ let maps = [{
     ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
     ctx.fillText("Unless you DEFEAT them!", 7 * tile1.size, 3 * tile1.size);
 
-    ctx.font = "25px Chilanka";
-    ctx.fillText(`${boss.currentHealth.toFixed(0)} / 2000`, boss.x + 55, boss.y - 50);
-    ctx.fillStyle = 'rgb(60, 60, 60)';
-    ctx.fillRect(boss.x + 25, boss.y - 40, 200, 20);
-    ctx.fillStyle = 'rgb(255, 0, 0)';
-    ctx.fillRect(boss.x + 25, boss.y - 40, boss.currentHealth / 10, 20);
-
+    if (maps[currentMap].boss[0].currentHealth > 0) {
+      ctx.font = "25px Chilanka";
+      ctx.fillText(`${maps[currentMap].boss[0].currentHealth.toFixed(0)} / 2000`, maps[currentMap].boss[0].x + 55, maps[currentMap].boss[0].y - 50);
+      ctx.fillStyle = 'rgb(60, 60, 60)';
+      ctx.fillRect(maps[currentMap].boss[0].x + 25, maps[currentMap].boss[0].y - 40, 200, 20);
+      ctx.fillStyle = 'rgb(255, 0, 0)';
+      ctx.fillRect(maps[currentMap].boss[0].x + 25, maps[currentMap].boss[0].y - 40, maps[currentMap].boss[0].currentHealth / 10, 20);  
+    } else {
+      ctx.font = "30px Chilanka";
+      ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
+      ctx.fillText("Wait... it's not over yet?", 8.5 * tile1.size, 6 * tile1.size);
+      backgroundMusic.pause();
+    }
+    
     ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
     ctx.font = "25px Chilanka";
     ctx.fillText(`${player.health.toFixed(0)} / 100`, player.x + 10, player.y - 30);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="71.518074mm" height="97.949905mm" version="1.1" viewBox="0 0 71.518074 97.949905" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient957" x1="469.71841" x2="907.42487" y1="550.52051" y2="550.52051" gradientTransform="matrix(.25995514 0 0 .26209123 -15.219383 -57.905208)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient943-9-1"/>
+  <linearGradient id="linearGradient943-9-1">
+   <stop stop-color="#007321" offset="0"/>
+   <stop stop-color="#007321" stop-opacity="0" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient973" x1="487.35742" x2="986.7627" y1="772.51367" y2="772.51367" gradientTransform="matrix(.26458333 0 0 .26458333 -18.246513 -59.655138)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient943-9-1"/>
+  <linearGradient id="linearGradient965" x1="124.24797" x2="337.46878" y1="155.94852" y2="155.94852" gradientTransform="translate(-18.246513,-59.655138)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient943-9-1"/>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-105.60406,-84.739332)">
+  <path d="m108.03834 85.268499h66.81738s1.73725 0.4009 1.73725 2.53906v17.773421s-0.53454 1.73725-2.27179 1.73725h-66.95101s-1.16802-0.0917-1.21527-2.07605c-0.0472-1.98438 0-18.048361 0-18.048361s-0.15463-1.86627 1.88344-1.92532z" fill="url(#linearGradient965)" stroke="#000" stroke-width="1.0583333"/>
+  <path d="m110.83243 107.31813v74.84194h61.0433v-74.84194z" fill="url(#linearGradient973)" stroke="#000" stroke-width="1.0583333"/>
+  <path d="m108.8564 85.653219c-1.36661 0.0399-1.72329 0.9055-1.81614 1.45634h68.99779c-0.43354-1.19792-1.53283-1.45634-1.53283-1.45634z" fill="url(#linearGradient957)"/>
+ </g>
+</svg>
