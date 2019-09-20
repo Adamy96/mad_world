@@ -16,9 +16,12 @@ class Dancer {
     this.updateFrameSpeed = 0.07;
   }
 
-  dance() {
+  update() {
     this.curFrame += this.updateFrameSpeed; // Isso serve pra 'retardar' o update nos frames do this
     this.srcX = (Math.floor(this.curFrame) % this.cols) * this.frameWidth;
+  }
+
+  dance() {
     ctx.drawImage(cDancer, this.srcX, this.srcY, this.frameWidth, this.frameHeight, this.x, this.y, 250, 250);
   }
 }

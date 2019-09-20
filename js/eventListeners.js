@@ -24,13 +24,14 @@ controller = {
 
       case 13: // tecla ENTER
 
-        if (maps[3].ghostsLeft > 0) backgroundMusic.play();
-        
-        if (!gameOver) {
+        if (!victory && !gameOver) {
+          startGame();
           hideGame.classList.remove('hideGame');
           hideGame.classList.add('showGame');
           h1.classList.add('h1_fadeOut');
+          backgroundMusic.play();
         }
+
         break;        
     }
   }

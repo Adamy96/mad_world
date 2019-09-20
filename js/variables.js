@@ -36,10 +36,7 @@ chaserDie.src = './sounds/chaser_die.wav';
 
 let haunted = new Audio();
 haunted.src = './sounds/haunted.mp3';
-
-let victoryMusic = new Audio();
-victoryMusic.src = './sounds/victoryMusic.wav';
-victoryMusic.loop = 'true';
+haunted.loop = 'true';
 
 let ghostDie = new Audio();
 ghostDie.src = './sounds/ghostDie.wav';
@@ -90,4 +87,4 @@ let mouse = {
   }
 }
 
-let currentMap = 3;
+let currentMap = 0;
