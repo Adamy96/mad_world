@@ -59,8 +59,7 @@ function startGame() {
   }
 }
 
-
-function victoryEnd() {
+let victoryEnd = function() {
   console.log('called');
   haunted.src = './sounds/victoryMusic.wav';
 

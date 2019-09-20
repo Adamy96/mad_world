@@ -296,7 +296,6 @@ let maps = [{
     // Plataformas
     for (let i = 0; i < 4; i++) {
       maps[2].obstacles.push(new Obstacle((i + 1) * 5 * tile1.size, canvas.height - (5 * tile1.size), 0, 0, tile1.size));
-      console.log(maps[2].obstacles[maps[2].obstacles.length - 1]);
     }
 
     for (let i = 0; i < 4; i++) {
@@ -501,7 +500,6 @@ let maps = [{
         ctx.drawImage(cSchyte, maps[currentMap].boss[0].schytes2[i].srcX, maps[currentMap].boss[0].schytes2[i].srcY, maps[currentMap].boss[0].schytes2[i].frameWidth, maps[currentMap].boss[0].schytes2[i].frameHeight, maps[currentMap].boss[0].schytes2[i].x, maps[currentMap].boss[0].schytes2[i].y, maps[currentMap].boss[0].schytes2[i].width, maps[currentMap].boss[0].schytes2[i].height);
         
         if (player.checkColisionRectangle(maps[currentMap].boss[0].schytes2[i])) {
-          console.log(player.health);
           player.health -= maps[currentMap].boss[0].schytes2[i].damage;
           maps[currentMap].boss[0].schytes2.splice(i, 1);
         }
