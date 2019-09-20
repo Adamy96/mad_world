@@ -33,6 +33,13 @@ mouseClickImg.src = '../../Programação/game/img/mouseClick.svg';
 let backgroundImg2 = new Image();
 backgroundImg2.src = '../../Programação/game/img/background_cave.svg';
 
+
+let backgroundCave = new Image();
+backgroundCave.src = '../../Programação/game/img/background_cave2.svg';
+
+let cMarioGhost = new Image();
+cMarioGhost.src = '../../Programação/game/img/mario_ghost.svg';
+
 let smokeImg = new Image();
 smokeImg.src = '../../Programação/game/img/963.jpg';
 

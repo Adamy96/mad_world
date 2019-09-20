@@ -368,18 +368,6 @@ let maps = [{
 
       // Deletando a bala caso saia do mapa
       if (maps[currentMap].bullets[i].x < 0 || maps[currentMap].bullets[i].x > canvas.width || maps[currentMap].bullets[i].y < 0 || maps[currentMap].bullets[i].y > canvas.height) maps[currentMap].bullets.splice(i, 1);
-    
-      // // Balas colidindo com os Chasers
-      // for (let j = 0; j < maps[currentMap].chasers.length; j++) {
-      //   if (maps[currentMap].bullets[i].checkColisionRectangle(maps[currentMap].chasers[j])) {
-      //     maps[currentMap].chasers[j].currentHealth -= maps[currentMap].bullets[i].damage;
-      //     maps[currentMap].chasers[j].speedX = maps[currentMap].bullets[i].speedX;
-      //     maps[currentMap].chasers[j].speedY = maps[currentMap].bullets[i].speedY;
-      //     maps[currentMap].bullets.splice(i, 1);
-      //     if (maps[currentMap].chasers[j].currentHealth <= 0) maps[currentMap].chasers.splice(j, 1);
-      //   }
-      // }
-      
     }
     
     ctx.font = "50px Chilanka";
@@ -403,6 +391,14 @@ let maps = [{
   chasers: [],
   bullets: [],
   boss: [],
+  incrementY: 0,
+  text1Height: 3 * tile1.size,
+  text2Height: -2 * tile1.size,
+  backgroundHeight: -2950,
+  secondPhase: false,
+  ghosts: [],
+  ghostsLeft: 25,
+  ghostRespawnRate: 500,
 
   createObstacles: () => {
     const boss = new Boss(960, 180, 300, 435);
@@ -416,16 +412,16 @@ let maps = [{
     maps[3].obstacles.push(new Obstacle(7 * tile1.size, canvas.height - 6 * tile1.size, 0, 0, tile1.size));
     maps[3].obstacles.push(new Obstacle(11 * tile1.size, canvas.height - 8 * tile1.size, 0, 0, tile1.size));
     maps[3].obstacles.push(new Obstacle(15 * tile1.size, canvas.height - 6 * tile1.size, 0, 0, tile1.size));
-    maps[3].obstacles.push(new Obstacle(19 * tile1.size, canvas.height - 4 * tile1.size, 0, 0, tile1.size));
   },
 
   draw: (player) => {
     // FUNDO "CAVERNA"
-    ctx.drawImage(backgroundImg2, 0, 0, canvas.width, canvas.height - tile1.size);
+    ctx.drawImage(backgroundCave, 0, maps[3].backgroundHeight += maps[3].incrementY);
+    // ctx.drawImage(backgroundImg2, 0, 0, canvas.width, canvas.height - tile1.size);
 
     // Obstáculos
     for (let i = 0; i < maps[3].obstacles.length; i++) {
-      ctx.drawImage(cTile1, maps[3].obstacles[i].x, maps[3].obstacles[i].y, maps[3].obstacles[i].size, maps[3].obstacles[i].size);
+      ctx.drawImage(cTile1, maps[3].obstacles[i].x, maps[3].obstacles[i].y += maps[3].incrementY, maps[3].obstacles[i].size, maps[3].obstacles[i].size);
       player.handleColision(maps[currentMap].obstacles[i]);
     }
 
@@ -549,7 +545,7 @@ let maps = [{
     // Frase
     ctx.font = "50px Chilanka";
     ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
-    ctx.fillText("Unless you DEFEAT them!", 7 * tile1.size, 3 * tile1.size);
+    ctx.fillText("Unless you DEFEAT them!", 7 * tile1.size, maps[3].text1Height += 2 * maps[3].incrementY);
 
     if (maps[currentMap].boss[0].currentHealth > 0) {
       ctx.font = "25px Chilanka";
@@ -558,11 +554,43 @@ let maps = [{
       ctx.fillRect(maps[currentMap].boss[0].x + 25, maps[currentMap].boss[0].y - 40, 200, 20);
       ctx.fillStyle = 'rgb(255, 0, 0)';
       ctx.fillRect(maps[currentMap].boss[0].x + 25, maps[currentMap].boss[0].y - 40, maps[currentMap].boss[0].currentHealth / 10, 20);  
-    } else {
+    } else { // <<<<<<<<<<<<<<<< Executar quando o boss morrer >>>>>>>>>>>>>
       ctx.font = "30px Chilanka";
       ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
-      ctx.fillText("Wait... it's not over yet?", 8.5 * tile1.size, 6 * tile1.size);
+      ctx.fillText("Wait... isn't over yet?", 9.5 * tile1.size, maps[3].text2Height += 2 * maps[3].incrementY);
+      maps[3].incrementY = 0.2;
+      haunted.play();
       backgroundMusic.pause();
+
+      if (!maps[3].secondPhase) { // Criando as plataformas
+        // Lado esquerdo
+        maps[3].obstacles.push(new Obstacle(10 * tile1.size, canvas.height - 8 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(2 * tile1.size, canvas.height - 8 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(0 * tile1.size, canvas.height - 11 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(4 * tile1.size, canvas.height - 14 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(7 * tile1.size, canvas.height - 17 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(8 * tile1.size, canvas.height - 17 *  tile1.size, 0, 0, tile1.size));
+
+
+        // Lado direito
+        maps[3].obstacles.push(new Obstacle(12 * tile1.size, canvas.height - 8 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(20 * tile1.size, canvas.height - 8 *  tile1.size, 0, 0, tile1.size));      
+        maps[3].obstacles.push(new Obstacle(22 * tile1.size, canvas.height - 11 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(18 * tile1.size, canvas.height - 14 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(13 * tile1.size, canvas.height - 17 *  tile1.size, 0, 0, tile1.size));
+        maps[3].obstacles.push(new Obstacle(14 * tile1.size, canvas.height - 17 *  tile1.size, 0, 0, tile1.size));
+
+        for(let i = 0; i < 5; i++) {
+          maps[3].obstacles.push(new Obstacle((i + 9) * tile1.size, canvas.height - 17 *  tile1.size, 0, 0, tile1.size));
+        }
+      }
+
+      if (maps[3].backgroundHeight >= -2200) {
+        maps[3].incrementY = 0;
+      }
+      
+
+      maps[3].secondPhase = true;
     }
     
     ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
@@ -574,5 +602,79 @@ let maps = [{
     ctx.fillRect(player.x + 10, player.y - 20, player.health, 10); 
 
     maps[3].count += 1;
+
+
+    // Spawnando os Ghosts
+    if (maps[3].boss[0].currentHealth <= 0) {
+      maps[3].chasers = [];
+
+      if (maps[3].count % Math.floor(maps[3].ghostRespawnRate) === 0) {
+        let rndNum = Math.random();
+
+        if (rndNum > 0.5) {
+          maps[3].ghosts.push(new MarioGhost(-5, rndNum * 500));
+        } else {
+          maps[3].ghosts.push(new MarioGhost(canvas.width + 5, rndNum * 500));
+        }  
+      }
+
+      for(let i = 0; i < maps[3].ghosts.length; i++) {
+        ctx.drawImage(cMarioGhost, maps[3].ghosts[i].srcX, maps[3].ghosts[i].srcY, maps[3].ghosts[i].frameWidth, maps[3].ghosts[i].frameHeight, maps[3].ghosts[i].x, maps[3].ghosts[i].y, maps[3].ghosts[i].width, maps[3].ghosts[i].height);
+  
+        // Vida dos Ghosts
+        ctx.font = "18px Chilanka";
+        ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
+        ctx.fillText(`${maps[currentMap].ghosts[i].currentHealth.toFixed(0)} / 50`, maps[currentMap].ghosts[i].x + 25, maps[currentMap].ghosts[i].y - 30);
+        ctx.fillStyle = 'rgb(60, 60, 60)';
+        ctx.fillRect(maps[currentMap].ghosts[i].x, maps[currentMap].ghosts[i].y - 20, 100, 1);
+        ctx.fillStyle = 'rgb(255, 0, 0)';
+        ctx.fillRect(maps[currentMap].ghosts[i].x, maps[currentMap].ghosts[i].y - 20, maps[currentMap].ghosts[i].currentHealth * 2, 10);  
+    
+
+        // Ghosts colidindo com o player
+        if (player.checkColisionRectangle(maps[currentMap].ghosts[i])) {
+          player.health -= maps[3].ghosts[i].damage;
+          maps[currentMap].ghosts.splice(i, 1);
+          ghostDie.play();
+        }
+
+        maps[3].ghosts[i].move(player);
+      }
+
+      // Bullets colidindo com os Ghosts
+      for (let i = 0; i < maps[currentMap].bullets.length; i++) {
+        for (let j = 0; j < maps[3].ghosts.length; j++) {
+          // Bullets colidingo com os ghosts
+          if (maps[currentMap].bullets[i].checkColisionRectangle(maps[currentMap].ghosts[j])) {
+            maps[currentMap].ghosts[j].currentHealth -= maps[currentMap].bullets[i].damage;
+            maps[currentMap].bullets.splice(i, 1);
+
+            if (maps[currentMap].ghosts[j].currentHealth <= 0) {
+              maps[currentMap].ghosts.splice(j, 1);
+              maps[currentMap].ghostsLeft -= 1;
+              ghostDie.play();
+            }
+          }
+        }
+      }
+
+      if (maps[3].ghostRespawnRate > 300) maps[3].ghostRespawnRate -= 0.2;
+      
+      if (maps[3].ghostsLeft !== 25) {
+        ctx.font = "50px Chilanka";
+        ctx.fillStyle = 'rgba(255 ,255 ,255 , .6)';
+        ctx.fillText(`Ghosts left: ${maps[3].ghostsLeft}`, 8 * tile1.size, canvas.height - 8 * tile1.size);
+      }
+
+      if (maps[3].ghostsLeft <= 0) {
+        victory = true;
+      }
+    
+    }
+
+    
+
+
+
   }
 }];

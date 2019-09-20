@@ -3,12 +3,11 @@
   // Instanciando o player
   const player = new Character('CookiexT');
   let cplayer = new Image();
-  cplayer.src = './img/mainChar_Sprite(Move&Idle)2.svg';
+  cplayer.src = './img/mainChar_movements.svg';
 
   // ================================ FUNÇÕES DE DESENHO ================================
 
-if (!gameOver) {
-  console.log('ok');
+if (!gameOver || !victory) {
   let interval = setInterval(() => {
 
   if (player.y > canvas.height || player.health <= 0) {
@@ -21,6 +20,10 @@ if (!gameOver) {
     hideGame.classList.add('hideGame');
     hideGame.classList.remove('showGame');
     h2.classList.add('h2_fadeIn');
+  }
+
+  if (victory) {
+    victoryEnd();
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,4 +47,26 @@ if (!gameOver) {
   player.draw(cplayer);
   mouse.drawCrosshair();
   }, 5); 
+}
+
+function victoryEnd() {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.beginPath();
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fill();
+
+  ctx.font = "80px Chilanka";
+  ctx.fillStyle = 'rgba(255, 255, 255, .8)';
+  ctx.fillText(`Congratulations!!`, 7 * tile1.size, canvas.height - 10 * tile1.size);
+  ctx.font = "60px Chilanka";
+  ctx.fillText(`You defeated all your fears`, 6 * tile1.size, canvas.height - 7.5 * tile1.size);
+  haunted.src = '';
+  victoryMusic.play();
+  clearInterval(interval);
+
+  // let dancers = [];
+  // dancers.push(new Dancer())
+  // setInterval(() => {
+
+  // }, 5);
 }

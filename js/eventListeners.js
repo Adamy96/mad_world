@@ -23,19 +23,15 @@ controller = {
         break;
 
       case 13: // tecla ENTER
-        backgroundMusic.play();
-        gameStarted = true; // TODO: não ta funcionando
+
+        if (maps[3].ghostsLeft > 0) backgroundMusic.play();
+        
         if (!gameOver) {
-          gameStarted = true;
           hideGame.classList.remove('hideGame');
           hideGame.classList.add('showGame');
           h1.classList.add('h1_fadeOut');
         }
-
-        if (gameOver) {
-          ctx.restore();
-          gameOver = false;
-        }
+        break;        
     }
   }
 }

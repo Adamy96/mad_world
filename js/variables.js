@@ -4,7 +4,7 @@ let ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let gameStarted = false;
+let victory = false;
 let gameOver = false;
 
 let hideGame = document.querySelector('.hideGame');
@@ -33,6 +33,17 @@ chaserAppear.src = './sounds/chaser_appear.wav';
 
 let chaserDie = new Audio();
 chaserDie.src = './sounds/chaser_die.wav';
+
+let haunted = new Audio();
+haunted.src = './sounds/haunted.mp3';
+
+let victoryMusic = new Audio();
+victoryMusic.src = './sounds/victoryMusic.wav';
+victoryMusic.loop = 'true';
+
+let ghostDie = new Audio();
+ghostDie.src = './sounds/ghostDie.wav';
+
 
 let explosionSound = new Audio();
 explosionSound.src = './sounds/explosion.mp3';
