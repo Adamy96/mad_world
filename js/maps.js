@@ -442,7 +442,7 @@ let maps = [{
       }
 
       // Inserindo chasers
-      if (maps[currentMap].count % 1000 === 0 && maps[currentMap].boss[0].currentHealth < 0.5 * maps[currentMap].boss[0].maxHealth) {
+      if (maps[currentMap].count % 500 === 0 && maps[currentMap].boss[0].currentHealth < 0.5 * maps[currentMap].boss[0].maxHealth) {
         let rndNum = Math.floor(Math.random() * 100);
 
         if (rndNum < 50) {

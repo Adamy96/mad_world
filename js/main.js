@@ -5,10 +5,12 @@
   let cplayer = new Image();
   cplayer.src = './img/mainChar_movements.svg';
 
+  let interval;
+
   // ================================ FUNÇÕES DE DESENHO ================================
 
 if (!gameOver || !victory) {
-  let interval = setInterval(() => {
+  interval = setInterval(() => {
 
   if (player.y > canvas.height || player.health <= 0) {
     playerDie.play();
@@ -50,23 +52,33 @@ if (!gameOver || !victory) {
 }
 
 function victoryEnd() {
-  ctx.fillStyle = 'rgb(0,0,0)';
-  ctx.beginPath();
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fill();
+  
 
-  ctx.font = "80px Chilanka";
-  ctx.fillStyle = 'rgba(255, 255, 255, .8)';
-  ctx.fillText(`Congratulations!!`, 7 * tile1.size, canvas.height - 10 * tile1.size);
-  ctx.font = "60px Chilanka";
-  ctx.fillText(`You defeated all your fears`, 6 * tile1.size, canvas.height - 7.5 * tile1.size);
   haunted.src = '';
   victoryMusic.play();
   clearInterval(interval);
 
-  // let dancers = [];
-  // dancers.push(new Dancer())
-  // setInterval(() => {
+  let dancers = [];
+  dancers.push(new Dancer(2 * tile1.size, canvas.height - 6 * tile1.size, 1));
+  dancers.push(new Dancer(canvas.width - 6.5 * tile1.size, canvas.height - 6 * tile1.size, 0));
 
-  // }, 5);
+  setInterval(() => {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
+    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.beginPath();
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fill();
+
+    ctx.font = "80px Chilanka";
+    ctx.fillStyle = 'rgba(255, 255, 255, .8)';
+    ctx.fillText(`Congratulations!!`, 7 * tile1.size, canvas.height - 10 * tile1.size);
+    ctx.font = "60px Chilanka";
+    ctx.fillText(`You defeated all your fears`, 6 * tile1.size, canvas.height - 7.5 * tile1.size);
+
+
+    for (let i = 0; i < dancers.length; i++) {
+      dancers[i].dance();
+    }
+  }, 5);
 }

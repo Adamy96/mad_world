@@ -6,6 +6,9 @@ let tile1 = {
 let cTile1 = new Image();
 cTile1.src = tile1.src;
 
+let cDancer = new Image();
+cDancer.src = '../../Programação/game/img/mainChar_dancing.svg';
+
 let cBoss = new Image();
 cBoss.src = '../../Programação/game/img/boss.svg';
 
