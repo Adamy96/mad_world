@@ -1,5 +1,5 @@
 let tile1 = {
-  src: '../../Programação/game/img/tile2.svg',
+  src: './img/tile2.svg',
   size: innerWidth / 25
 }
 
@@ -7,44 +7,44 @@ let cTile1 = new Image();
 cTile1.src = tile1.src;
 
 let cDancer = new Image();
-cDancer.src = '../../Programação/game/img/mainChar_dancing.svg';
+cDancer.src = './img/mainChar_dancing.svg';
 
 let cBoss = new Image();
-cBoss.src = '../../Programação/game/img/boss.svg';
+cBoss.src = './img/boss.svg';
 
 let cSchyte = new Image();
-cSchyte.src = '../../Programação/game/img/schyte_sprite.svg';
+cSchyte.src = './img/schyte_sprite.svg';
 
 let cChaser = new Image();
-cChaser.src = '../../Programação/game/img/chaser.svg';
+cChaser.src = './img/chaser.svg';
 
 let cTunnel = new Image();
-cTunnel.src = '../../Programação/game/img/mario_tunnel.svg';
+cTunnel.src = './img/mario_tunnel.svg';
 
 let cLava = new Image();
-cLava.src = '../../Programação/game/img/lava.svg';
+cLava.src = './img/lava.svg';
 
 let arrowKeysImg = new Image();
-arrowKeysImg.src = '../../Programação/game/img/arrowKeys.svg';
+arrowKeysImg.src = './img/arrowKeys.svg';
 
 let asdKeysImg = new Image();
-asdKeysImg.src = '../../Programação/game/img/asdKeys.svg';
+asdKeysImg.src = './img/asdKeys.svg';
 
 let mouseClickImg = new Image();
-mouseClickImg.src = '../../Programação/game/img/mouseClick.svg';
+mouseClickImg.src = './img/mouseClick.svg';
 
 let backgroundImg2 = new Image();
-backgroundImg2.src = '../../Programação/game/img/background_cave.svg';
+backgroundImg2.src = './img/background_cave.svg';
 
 
 let backgroundCave = new Image();
-backgroundCave.src = '../../Programação/game/img/background_cave2.svg';
+backgroundCave.src = './img/background_cave2.svg';
 
 let cMarioGhost = new Image();
-cMarioGhost.src = '../../Programação/game/img/mario_ghost.svg';
+cMarioGhost.src = './img/mario_ghost.svg';
 
 let smokeImg = new Image();
-smokeImg.src = '../../Programação/game/img/963.jpg';
+smokeImg.src = './img/963.jpg';
 
 let backgroundSmoke1 = {
   img: smokeImg,
