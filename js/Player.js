@@ -4,7 +4,8 @@ class Character {
     // Status
     this.name = name;
     this.health = 100;
-    this.size = 100;
+//     this.size = 100;
+    this.size = tile1.size * 1.8;
     this.speedX = 0;
     this.speedY = 0;
     this.jumping = false;
@@ -47,7 +48,8 @@ class Character {
 
     if (controller.up && this.jumping == false) { // Pulo
       playerJump.play();
-      this.speedY = -8; // -= 7
+//       this.speedY = -8; // -= 7
+      this.speedY = - tile1.size / 6.5;
       this.jumping = true;
     }
 
