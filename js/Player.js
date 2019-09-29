@@ -49,7 +49,7 @@ class Character {
     if (controller.up && this.jumping == false) { // Pulo
       playerJump.play();
 //       this.speedY = -8; // -= 7
-      this.speedY = - tile1.size / 6.5;
+      this.speedY = - tile1.size / 7;
       this.jumping = true;
     }
 
