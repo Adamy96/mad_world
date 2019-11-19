@@ -253,8 +253,8 @@ let maps = [{
     maps[currentMap].count += 1;
 
     if (maps[currentMap].count % 300 === 0) {
-      maps[currentMap].fireBalls.push(new FireBall(15.5 * tile1.size, canvas.height - 2 * tile1.size, 0, - tile1.size / 7.5, tile1.size, 0.1));
-      maps[currentMap].fireBalls.push(new FireBall(20.5 * tile1.size, canvas.height - 2 * tile1.size, 0, - tile1.size / 7.5, tile1.size, 0.1));
+      maps[currentMap].fireBalls.push(new FireBall(15.5 * tile1.size, canvas.height - 2 * tile1.size, 0, - tile1.size / 7.5, tile1.size / 2, 0.1));
+      maps[currentMap].fireBalls.push(new FireBall(20.5 * tile1.size, canvas.height - 2 * tile1.size, 0, - tile1.size / 7.5, tile1.size / 2, 0.1));
     }
     
     for (let i = 0; i < maps[currentMap].fireBalls.length; i++) {
